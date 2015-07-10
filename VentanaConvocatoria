@@ -1,0 +1,126 @@
+package examenes;
+
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import controlador.*;
+
+
+public class VentanaConvocatoria extends JFrame implements IEjemplo{
+	/**
+	 * @Daniel ver1.0
+	 */
+	private static final long serialVersionUID = 1L;
+
+	JFrame frame = new JFrame("Generador de examenes");
+	String[] temasSal = { "historia", "geografia", "filosofia", "astronomia" };
+	JPanel panel = new JPanel(new BorderLayout());
+	JPanel secondaryPanel = new JPanel();
+	JPanel terciaryPanel = new JPanel();
+	JButton button;
+
+	String[] nombreColumna = { "Examenes" };
+	DefaultTableModel model = new DefaultTableModel(nombreColumna, 0);
+	JTable tablaPregResp = new JTable(model);
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	JComboBox<?> temas = new JComboBox(temasSal);
+	JScrollPane panelPreguntas = new JScrollPane(tablaPregResp);
+	JPanel mainPanel = new JPanel();
+	JLabel one = new JLabel("Elija un tema de la siguente lista: ");
+	ButtonHandler obe = new ButtonHandler();
+	
+	
+	public VentanaConvocatoria() {
+
+		crearPanel();
+
+	}
+
+	private void crearPanel() {
+
+		terciaryPanel.setLayout(new BoxLayout(terciaryPanel, BoxLayout.Y_AXIS));
+		secondaryPanel
+				.setLayout(new BoxLayout(secondaryPanel, BoxLayout.Y_AXIS));
+		panelPreguntas.setColumnHeaderView(tablaPregResp.getTableHeader());
+		button = new JButton("Crear examen");
+		button.setActionCommand(GENERAR);
+		button.addActionListener(obe);
+		
+		
+        mainPanel.add(one);
+		mainPanel.add(temas);
+		mainPanel.add(button);
+		secondaryPanel.add(panelPreguntas);
+		panel.add(mainPanel, BorderLayout.NORTH);
+		panel.add(secondaryPanel, BorderLayout.CENTER);
+		frame.setContentPane(panel);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.pack();
+		frame.setVisible(true);
+	}
+	
+	class ButtonHandler implements ActionListener {
+		
+		public void actionPerformed(ActionEvent e) {
+			String s = e.getActionCommand();
+			String f = (String) temas.getSelectedItem();
+			System.out.println(GENERAR);
+			
+			
+			if (s.equalsIgnoreCase(GENERAR)) {
+			
+				 DefaultTableModel model = (DefaultTableModel)tablaPregResp.getModel();
+				    model.addRow(new Object[]{f});
+				    
+				
+				
+				
+			}
+		
+		}
+	}
+
+	
+
+	public static void main(String[] args) {
+
+		@SuppressWarnings("unused")
+		VentanaConvocatoria Display2 = new VentanaConvocatoria();
+
+	}
+
+	@Override
+	public void setControlador(ActionListener c) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setDatos(Datos d) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Datos getDatos() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void iniciar() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}
